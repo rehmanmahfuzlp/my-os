@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="bn"><head><meta charset="utf-8"><title>My Life OS</title>
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#4f46e5"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f4fc;--card:#fff;--tx:#1d1b3b;--mu:#65658a;--bd:#e4e5f4;--pr:#4f46e5;--sh:0 3px 14px rgba(60,60,140,.08);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+
+:root[data-theme=dark]{--bg:#11112a;--card:#1b1b3a;--tx:#ececff;--mu:#a0a0c8;--bd:#2c2c55;--pr:#8b8bff;--sh:none}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Hind Siliguri','Noto Sans Bengali',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:15px;line-height:1.45;padding-bottom:80px}
+main{max-width:640px;margin:0 auto;padding:10px 12px}
+h3{font-size:16px;margin:16px 2px 4px}
+small{color:var(--mu);font-size:12.5px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:13px;margin:9px 0;box-shadow:var(--sh)}
+.hero{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;border:0}
+.hero small{color:#e0defc}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.g2 .c{margin:0}
+.fb{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.row{display:flex;align-items:center;gap:11px}
+.btn{border:0;border-radius:12px;padding:10px 14px;background:var(--pr);color:#fff;font:inherit;font-weight:600}
+.btn.o{background:none;color:var(--pr);border:1px solid var(--bd)}
+.btn.w{background:#fff;color:#4f46e5}
+.pb{height:9px;background:var(--bd);border-radius:9px;overflow:hidden;margin:7px 0}
+.pb i{display:block;height:100%;border-radius:9px;transition:width .5s}
+.hero .pb{background:rgba(255,255,255,.25)}
+.ck{width:36px;height:36px;border-radius:50%;border:2.5px solid var(--c,#4f46e5);background:none;color:#fff;font-size:19px;flex:none;transition:.2s}
+.ck.on{background:var(--c);animation:pop .3s}.ck.sm{width:28px;height:28px;font-size:15px}
+@keyframes pop{50%{transform:scale(1.25)}}
+.cu{outline:2px solid var(--pr)}.dn b{text-decoration:line-through;opacity:.6}
+.bg{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:9px;color:#fff;margin-right:4px}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:8px;width:100%}
+textarea{min-height:70px}
+.ins{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.ct{text-align:center}.cc{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.cc button{width:38px;height:38px;border-radius:50%;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:20px}
+.cc b{font-size:24px}
+.bars{display:flex;gap:6px;align-items:flex-end;height:110px;margin-top:8px}
+.bars>div{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
+.bars i{width:100%;min-height:3px;border-radius:6px 6px 0 0}.bars em{font-size:10px;font-style:normal;color:var(--mu)}
+.pill{display:flex;gap:6px;margin:6px 0}.pill button{flex:1}
+.pop{animation:pop .6s;text-align:center;font-weight:600}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--bd);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+nav button{flex:1;background:none;border:0;font:inherit;font-size:11px;color:var(--mu);display:flex;flex-direction:column;align-items:center}
+nav button span{font-size:19px}nav button.on{color:var(--pr);font-weight:700}
+a{cursor:pointer;color:var(--pr)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body><main id="m"></main><nav id="nv"></nav>
+<script>
+const $=id=>document.getElementById(id);
+const TZ='Asia/Dhaka',K='lifeos1';
+const bn=n=>(''+n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
+const esc=s=>(''+(s==null?'':s)).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+const td=()=>new Intl.DateTimeFormat('en-CA',{timeZone:TZ}).format(new Date());
+const ad=(k,n)=>{const d=new Date(k+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
+const df=(a,b)=>Math.round((new Date(b+'T12:00:00Z')-new Date(a+'T12:00:00Z'))/864e5);
+const dl=(k,o)=>new Date(k+'T12:00:00Z').toLocaleDateString('bn-BD',{timeZone:'UTC',...o});
+const wdn=k=>new Date(k+'T12:00:00Z').getUTCDay();
+const nowMin=()=>{const p=new Intl.DateTimeFormat('en-GB',{timeZone:TZ,hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date()).split(':');return +p[0]*60+ +p[1]};
+const mn=t=>{const[h,m]=t.split(':');return +h*60+ +m};
+const key=t=>mn(t)<300?mn(t)+1440:mn(t);
+const f12=t=>{const[h,m]=t.split(':').map(Number);return bn(((h+11)%12+1)+':'+String(m).padStart(2,'0'))+(h<12?' AM':' PM')};
+const CC={Personal:'#14b8a6',Business:'#f59e0b',Learning:'#0ea5e9',Project:'#8b5cf6',Planning:'#4f46e5',Health:'#1e3a8a'};
+const DN=['রবি','সোম','মঙ্গল','বুধ','বৃহঃ','শুক্র','শনি'];
+const W=['Agency Lead Research','MediaMorph & Vibe96','PDF Maker App','GTA 6 YouTube','Agency Follow-ups & Proposals','Weekly Review, GTA 6 Wiki, Money App Ideas ও বিশ্রাম','Ruposhi Care Sales & Offers'];
+const R=[
+['wk','08:30','09:00','ঘুম থেকে ওঠা, ফ্রেশ ও নাস্তা','Personal','শান্তভাবে দিন শুরু করুন'],
+['rc1','09:00','11:00','Ruposhi Care — সেলস ও ফলো-আপ','Business','পোস্ট, মার্কেটিং ও কাস্টমার ফলো-আপ'],
+['en','11:00','11:30','English Listening & Speaking','Learning','১৫ মিনিট শোনা, ১৫ মিনিট বলা'],
+['ag1','11:30','13:30','Agency — লিড রিসার্চ ও কোল্ড ইমেইল','Business','ইমেইল পাঠান, ফলো-আপ করুন'],
+['lu','13:30','14:30','লাঞ্চ, নামাজ ও বিরতি','Personal','একটু বিশ্রাম নিন'],
+['ag2','14:30','15:30','Agency — স্কিল, পোর্টফোলিও ও প্রপোজাল','Business','ডেমো ও প্রপোজাল তৈরি'],
+['rc2','15:30','16:15','Ruposhi Care — অর্ডার প্রসেস ও ডেলিভারি','Business','অর্ডার কনফার্ম ও কুরিয়ার'],
+['de','16:15','16:45','German Language Practice','Learning','৫টি নতুন শব্দ, ৩টি বাক্য'],
+['sa','16:45','17:45','Micro SaaS / MediaMorph AI / Vibe96','Project','হালকা ও ফোকাসড কাজ'],
+['rs','17:45','18:45','বিশ্রাম, হাঁটা ও নামাজ','Personal','নিজের জন্য সময়'],
+['gt','18:45','19:45','GTA 6 YouTube ও Wiki Planning','Project','আইডিয়া, স্ক্রিপ্ট বা প্ল্যান'],
+['di','19:45','20:30','ডিনার ও বিরতি','Personal','রিলাক্স করুন'],
+['ma','20:30','21:15','Mathematics & Calculus','Learning','লেসন ও প্র্যাকটিস'],
+['fx','21:15','22:00','Flexible Business / ক্লায়েন্ট ফলো-আপ','Business','বাকি কাজ সারুন'],
+['bk','22:00','22:30','Book Reading','Learning','৩০ মিনিটের পড়া'],
+['rv','22:30','23:00','Daily Review ও আগামীকালের প্ল্যান','Planning','আজকের হিসাব মিলিয়ে নিন'],
+['wd','23:00','00:30','Wind Down ও স্লিপ প্রিপারেশন','Personal','স্ক্রিন বন্ধ করে প্রস্তুতি নিন'],
+['sl','00:30','08:30','Sleep','Health','পর্যাপ্ত ঘুমই আসল প্রোডাক্টিভিটি']];
+const PM={
+mm:['MediaMorph AI','#8b5cf6','উচ্চ',0,['বাকি কাজ শেষ করা','প্রোডাক্ট টেস্টিং','ডকুমেন্টেশন','লাইসেন্স ও অ্যাসেট ক্লিয়ারেন্স','লিস্টিং প্রস্তুতি','Vibe96 সাবমিশন']],
+pd:['PDF Maker Android App','#7c3aed','মাঝারি','NID-তে মূল তথ্য অপরিবর্তিত রাখুন; অন-ডিভাইস প্রসেসিং',['Text to PDF','Images to PDF','Multi-image PDF','পেজ অ্যারেঞ্জমেন্ট','ডকুমেন্ট স্ক্যান','ID কার্ডের সামনে-পিছনে লেআউট']],
+mo:['Money Management App','#4f46e5','নিম্ন',0,['মার্কেট রিসার্চ','ফিচার প্ল্যান','MVP স্কোপ','UI/UX প্ল্যান','ডেভেলপমেন্ট','টেস্টিং','লঞ্চ']],
+yt:['GTA 6 YouTube Channel','#10b981','মাঝারি','কপিরাইট-সেফ: নিজের ভয়েস ও ফুটেজ, লাইসেন্সড মিউজিক। আয় নিশ্চিত নয়।',['রিসার্চ','অরিজিনাল আইডিয়া','স্ক্রিপ্ট','ভিডিও এডিটিং','আপলোড','পারফরম্যান্স রিভিউ']],
+wi:['GTA 6 Wiki Website','#059669','নিম্ন','দীর্ঘমেয়াদি; প্রতিদিন ডেভেলপ করতে হবে না',['ওয়েবসাইট স্ট্রাকচার','ক্যারেক্টার','মিশন','ম্যাপ','গাইড','সার্চ ফাংশন','SEO কনটেন্ট স্ট্র্যাটেজি','অ্যাড মনিটাইজেশন','অ্যাফিলিয়েট সুযোগ']]};
+const LN=[['en','English','#0ea5e9',30,'শোনা ১৫ + বলা ১৫ মিনিট'],['de','German','#14b8a6',30,'৫ শব্দ, ৩ বাক্য; A1 ক্লাস মার্চ ২০২৭'],['ma','Mathematics','#7c3aed',45,'লেসন ও প্র্যাকটিস'],['bk','Book Reading','#eab308',30,'প্রতিদিন পড়ার সময়']];
+const MR=['Algebra','Functions','Graphs','Limits','Derivatives','Integration'];
+const ST=['New Lead','Researched','Contacted','Replied','Meeting','Proposal','Won','Lost'];
+const TH=[0,3,6,9,12,14,17],SP=[['03:30','11:30'],['03:00','11:00'],['02:30','10:30'],['02:00','10:00'],['01:30','09:30'],['01:00','09:00'],['00:30','08:30']];
+const seed=k=>PM[k][4].map(t=>({t,d:0}));
+const mk=()=>({set:{stock:88,price:1175,cost:360,exp:0,days:14},days:{},leads:[],proj:Object.fromEntries(Object.keys(PM).map(k=>[k,seed(k)])),dark:null,ch:'',sl:'',mc:'',mr:{},bk:''});
+let S,ok=true,tab='home',cur=td(),open='',bs='rp',pj='',rc=0,msg='';
+try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
+if(!S||!S.days)S=mk();
+Object.keys(PM).forEach(k=>{S.proj=S.proj||{};if(!S.proj[k])S.proj[k]=seed(k)});
+try{localStorage.setItem(K+'t','1')}catch(e){ok=false}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){ok=false}};
+const E={t:{},x:[],tm:{},nm:{},o:{},ln:{},rv:{}};
+const dv=k=>S.days[k]||E;
+const dw=k=>S.days[k]||(S.days[k]={t:{},x:[],tm:{},nm:{},o:{},ln:{},rv:{}});
+const gv=(o,p)=>p.split('.').reduce((a,k)=>a&&a[k],o)||0;
+const sv=(p,v)=>{const a=p.split('.');let o=dw(cur);a.slice(0,-1).forEach(k=>o=o[k]||(o[k]={}));o[a.pop()]=v};
+const sum=p=>Object.values(S.days).reduce((a,d)=>a+gv(d,p),0);
+const lm=d=>Object.values(d.ln||{}).reduce((a,b)=>a+b,0);
+const items=k=>{const d=dv(k);return R.map(x=>{const t=d.tm[x[0]]||[x[1],x[2]];return{id:x[0],s:t[0],e:t[1],n:d.nm[x[0]]||x[3],c:x[4],ds:x[5]}}).concat((d.x||[]).map(x=>({...x}))).sort((a,b)=>key(a.s)-key(b.s))};
+const stat=k=>{const it=items(k),d=dv(k).t,dn=it.filter(i=>d[i.id]=='d').length,sk=it.filter(i=>d[i.id]=='s').length;return{dn,sk,tot:it.length,p:Math.round(dn/Math.max(1,it.length-sk)*100)}};
+const curIt=it=>{const n=nowMin();return it.find(i=>{const s=mn(i.s);let e=mn(i.e);if(e<=s)e+=1440;return(n>=s&&n<e)||(n+1440>=s&&n+1440<e)})};
+const l7=k=>[6,5,4,3,2,1,0].map(i=>ad(k,-i));
+const streak=()=>{let k=td(),n=0;if(stat(k).p<50)k=ad(k,-1);while(stat(k).p>=50&&n<400){n++;k=ad(k,-1)}return n};
+const bars=(v,c,ks,u)=>{const m=Math.max(...v,1);return`<div class="bars">${v.map((x,i)=>`<div><em>${x?bn(+x.toFixed?+x.toFixed(1):x)+(u||''):''}</em><i style="height:${Math.round(x/m*84)}%;background:${c}"></i><small>${DN[wdn(ks[i])]}</small></div>`).join('')}</div>${v.some(x=>x)?'':'<small>ডেটা যোগ করলে চার্ট দেখা যাবে</small>'}`};
+const pb=(p,c)=>`<div class="pb"><i style="width:${Math.min(100,Math.max(0,p))}%;background:${c||'var(--pr)'}"></i></div>`;
+const ct=(l,p,c,t)=>`<div class="c ct"><small>${l}</small><div class="cc"><button onclick="A.c('${p}',-1)">−</button><b style="color:${c||'var(--pr)'}">${bn(gv(dv(cur),p))}</b><button onclick="A.c('${p}',1)">+</button></div>${t?`<small>${t}</small>`:''}</div>`;
+const db=()=>`<div class="c fb"><button class="btn o" onclick="A.dt(-1)">‹</button><div style="text-align:center"><b>${dl(cur,{weekday:'long',day:'numeric',month:'long'})}</b><br>${cur==td()?'<small>আজ</small>':'<small>পুরনো/অন্য তারিখ — <a onclick="A.dt(0)">আজকে ফিরুন</a></small>'}</div><button class="btn o" onclick="A.dt(1)">›</button></div>`;
+const sales=()=>{const s=S.set,C=sum('o.c'),D=sum('o.d'),X=sum('o.x'),Rt=sum('o.r'),net=C-X-Rt,dr=Math.max(0,D-Rt),rev=dr*s.price,gm=rev-dr*s.cost;return{C,D,X,Rt,net,rem:s.stock-net,rev,gm,np:gm-s.exp,pend:Math.max(0,C-X-D)}};
+const money=n=>'৳'+bn(Math.round(n).toLocaleString('en-US'));
+const wk2=k=>{const n=(wdn(k)+1)%7,ws=ad(k,-n),ds=Array.from({length:n+1},(_,i)=>ad(ws,i)),wp=Math.round(ds.reduce((a,x)=>a+stat(x).p,0)/ds.length),wg=ds.filter(x=>stat(x).p>=50).length,rv=dv(k).rv||{},tm=nowMin(),
+b=tm>=1320&&!(rv.a||rv.p||rv.i)?'🌙 রাত হয়েছে — আজকের ডেইলি রিভিউ বাকি':wdn(k)==5&&tm>=540?'📅 শুক্রবার — সাপ্তাহিক রিভিউর সময়':'';
+return(b?`<div class="c fb"><b>${b}</b><button class="btn" onclick="A.go('mo')">রিভিউ</button></div>`:'')+`<div class="c"><div class="fb"><b>এই সপ্তাহ (শনি–শুক্র)</b><b>${bn(wp)}%</b></div>${pb(wp,'#7c3aed')}<small>${bn(wg)}/${bn(ds.length)} দিন ৫০%+ সম্পন্ন • স্ট্রিক ${bn(streak())} দিন${wg==ds.length&&ds.length>=3?' • 🎉 এই সপ্তাহে প্রতিদিন ধারাবাহিক!':''}</small></div>`};
+const V={};
+V.home=()=>{const k=td(),it=items(k),d=dv(k).t,s=stat(k),h=Math.floor(nowMin()/60),sl=sales(),
+g=h>=5&&h<12?'শুভ সকাল':h>=12&&h<16?'শুভ দুপুর':h>=16&&h<18?'শুভ বিকেল':h>=18&&h<20?'শুভ সন্ধ্যা':'শুভ রাত্রি',
+c=curIt(it),n=c&&!d[c.id]?c:it.find(i=>!d[i.id]&&key(i.s)>(nowMin()<300?nowMin()+1440:nowMin())),
+wk=l7(k).filter(x=>stat(x).p>=50).length,lmn=lm(dv(k));
+return`<div class="c hero"><div class="fb"><div><b style="font-size:19px">${g}, মাহফুজ</b><br><small>${dl(k,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</small></div><div style="text-align:right"><b style="font-size:22px">🔥 ${bn(streak())}</b><br><small>দিনের স্ট্রিক</small></div></div>
+<div class="fb" style="margin-top:10px"><small>Build. Learn. Grow. Repeat.</small><b>${bn(s.p)}%</b></div>${pb(s.p,'#fff')}<small>${s.p==100?'অভিনন্দন! সব কাজ শেষ':s.dn?'চমৎকার এগোচ্ছেন, চালিয়ে যান':'ছোট একটি কাজ দিয়ে শুরু করুন'}</small></div>
+${s.p==100&&s.tot?'<div class="c pop">🎉 আজকের সব কাজ সম্পন্ন! দারুণ কাজ।</div>':''}
+<div class="c"><small>${c&&!d[c.id]?'এখন চলছে':'পরবর্তী কাজ'} • Start My Day</small>${n?`<div class="row" style="margin-top:8px"><div style="flex:1"><b>${esc(n.n)}</b><br><small>${f12(n.s)} – ${f12(n.e)}</small></div><button class="btn" onclick="A.tg('${n.id}')">সম্পন্ন ✓</button></div>`:'<div style="margin-top:6px"><b>আজকের আর কোনো কাজ বাকি নেই</b></div>'}</div>
+${wk2(k)}<h3>আজকের পরিসংখ্যান</h3><div class="g2">
+<div class="c"><small>✅ কাজ সম্পন্ন</small><br><b style="font-size:22px;color:#4f46e5">${bn(s.dn)}/${bn(s.tot)}</b></div>
+<div class="c"><small>🛍️ Ruposhi অর্ডার</small><br><b style="font-size:22px;color:#e11d48">${bn(gv(dv(k),'o.c'))}</b></div>
+<div class="c"><small>📧 কোল্ড ইমেইল</small><br><b style="font-size:22px;color:#f59e0b">${bn(gv(dv(k),'em'))}</b></div>
+<div class="c"><small>📚 শেখার সময়</small><br><b style="font-size:22px;color:#0ea5e9">${bn(lmn)} মি.</b></div>
+<div class="c"><small>🎯 স্টক বিক্রি লক্ষ্য</small><br><b style="font-size:22px;color:#10b981">${bn(sl.net)}/${bn(S.set.stock)}</b></div>
+<div class="c"><small>📈 সাপ্তাহিক ধারাবাহিকতা</small><br><b style="font-size:22px;color:#7c3aed">${bn(wk)}/৭</b></div></div>
+<h3>আজকের ফোকাস</h3><div class="c"><div>1️⃣ <b>Ruposhi Care</b> — বিক্রি ও অর্ডার</div><div>2️⃣ <b>Agency</b> — প্রথম পেইং ক্লায়েন্ট</div><div>3️⃣ <b>Personal Development</b> — নিয়মিত শেখা</div><small style="display:block;margin-top:6px">আজকের থিম: ${W[wdn(k)]}</small></div>
+<h3>গত ৭ দিনের সম্পন্নের হার (%)</h3><div class="c">${bars(l7(k).map(x=>stat(x).p),'#4f46e5',l7(k))}<small>স্ট্রিক = যেদিন ৫০%+ কাজ সম্পন্ন</small></div>`};
+V.rt=()=>{const it=items(cur),d=dv(cur).t,s=stat(cur),c=cur==td()?curIt(it):null;
+return db()+`<div class="c"><small>${W[wdn(cur)]}</small><div class="fb"><b>${bn(s.dn)}/${bn(s.tot)} সম্পন্ন${s.sk?' • '+bn(s.sk)+' এড়ানো':''}</b><b>${bn(s.p)}%</b></div>${pb(s.p)}</div>`+
+it.map(i=>{const st=d[i.id],col=CC[i.c],o=open==i.id;
+return`<div class="c ${c&&c.id==i.id?'cu':''} ${st=='d'?'dn':''}" style="border-left:5px solid ${col}"><div class="row"><button class="ck ${st=='d'?'on':''}" style="--c:${col}" onclick="A.tg('${i.id}')">${st=='d'?'✓':''}</button><div style="flex:1" onclick="A.ex('${i.id}')"><b>${esc(i.n)}</b><br><small>${f12(i.s)} – ${f12(i.e)}</small> <span class="bg" style="background:${col}">${i.c}</span>${st=='s'?'<span class="bg" style="background:#94a3b8">এড়ানো</span>':''}${c&&c.id==i.id?'<span class="bg" style="background:#4f46e5">এখন</span>':''}</div></div>
+${o?`<div style="margin-top:8px"><small>${esc(i.ds||'')}</small><div class="ins"><input type="time" value="${i.s}" onchange="A.ed('${i.id}','s',this.value)"><input type="time" value="${i.e}" onchange="A.ed('${i.id}','e',this.value)"></div><input value="${esc(i.n)}" onchange="A.ed('${i.id}','n',this.value)"><div class="pill"><button class="btn o" onclick="A.sk('${i.id}')">${st=='s'?'এড়ানো বাতিল':'এড়িয়ে যান'}</button>${i.id[0]=='c'&&/^c\d/.test(i.id)?`<button class="btn o" onclick="A.del('${i.id}')">মুছুন</button>`:''}</div></div>`:''}</div>`}).join('')+
+`<h3>নতুন টাস্ক যোগ করুন</h3><div class="c"><input id="cn" placeholder="টাস্কের নাম"><div class="ins"><input id="cs" type="time" value="12:00"><input id="ce" type="time" value="12:30"></div><select id="cc">${Object.keys(CC).map(x=>`<option>${x}</option>`).join('')}</select><button class="btn" style="margin-top:8px;width:100%" onclick="A.ad()">যোগ করুন</button></div>
+<button class="btn o" style="width:100%" onclick="A.rs()">${rc?'নিশ্চিত? আবার চাপুন — এই দিনের টিক মুছে যাবে':'এই দিনের টাস্ক রিসেট'}</button>`};
+V.bz=()=>`<div class="pill"><button class="btn ${bs=='rp'?'':'o'}" onclick="bs='rp';render()">Ruposhi Care</button><button class="btn ${bs=='ag'?'':'o'}" onclick="bs='ag';render()">Agency</button></div>`+db()+(bs=='rp'?(()=>{const s=S.set,m=sales(),p=m.net/Math.max(1,s.stock)*100,tgt=Math.ceil(s.stock/Math.max(1,s.days)),k=l7(cur);
+return`<div class="c"><div class="fb"><b>স্টক: ${bn(m.net)} বিক্রি / ${bn(s.stock)}</b><b style="color:#e11d48">${bn(Math.round(p))}%</b></div>${pb(p,'#e11d48')}<small>বাকি স্টক: ${bn(m.rem)} • দৈনিক লক্ষ্য ≈ ${bn(tgt)} পিস (লক্ষ্য মাত্র, নিশ্চয়তা নয়)</small></div>
+<div class="g2">${ct('কনফার্ম অর্ডার','o.c','#e11d48')}${ct('ডেলিভারড','o.d','#10b981')}${ct('ক্যানসেলড','o.x','#64748b')}${ct('রিটার্নড','o.r','#f59e0b')}</div>
+<h3>হিসাব</h3><div class="c"><div class="fb"><span>ডেলিভারি বাকি</span><b>${bn(m.pend)} পিস</b></div><div class="fb"><span>রেভিনিউ (ডেলিভারড − রিটার্ন)</span><b>${money(m.rev)}</b></div><div class="fb"><span>গ্রস মার্জিন (শুধু প্রোডাক্ট কস্ট বাদে)</span><b>${money(m.gm)}</b></div><div class="fb"><span>নেট লাভ (খরচ বাদে)</span><b style="color:${m.np<0?'#e11d48':'#10b981'}">${money(m.np)}</b></div><small>সম্ভাব্য সর্বোচ্চ রেভিনিউ ${money(s.stock*s.price)}, প্রোডাক্ট-কস্ট মার্জিন ${money(s.stock*(s.price-s.cost))} — বিজ্ঞাপন, ডেলিভারি, রিটার্ন বাদে</small></div>
+<h3>সেটিংস</h3><div class="c"><div class="ins"><label><small>মোট স্টক</small><input type="number" value="${s.stock}" onchange="A.st('stock',this.value)"></label><label><small>বিক্রয়মূল্য</small><input type="number" value="${s.price}" onchange="A.st('price',this.value)"></label><label><small>ক্রয়মূল্য</small><input type="number" value="${s.cost}" onchange="A.st('cost',this.value)"></label><label><small>মোট খরচ (অ্যাড, ডেলিভারি ইত্যাদি)</small><input type="number" value="${s.exp}" onchange="A.st('exp',this.value)"></label><label><small>লক্ষ্য (দিন)</small><input type="number" value="${s.days}" onchange="A.st('days',this.value)"></label></div></div>
+<h3>গত ৭ দিনের কনফার্ম অর্ডার</h3><div class="c">${bars(k.map(x=>gv(dv(x),'o.c')),'#e11d48',k)}</div>`})():(()=>{const dd=df(td(),'2026-11-27'),cd=S.ch?df(S.ch,td())+1:0,ls=S.leads;
+return`<div class="c" style="border-left:5px solid #f59e0b"><b>🎓 Khaled Farhan — Agency Masterclass</b><br><small>২৭ নভেম্বর ২০২৬ • ${dd>0?bn(dd)+' দিন বাকি':dd==0?'আজই!':'শেষ হয়েছে'}</small></div>
+<div class="c"><b>২০ দিনের চ্যালেঞ্জ</b>${S.ch?`<div class="fb"><span>দিন ${bn(Math.min(20,cd))}/২০</span><small>শুরু: ${dl(S.ch,{day:'numeric',month:'short'})}</small></div>${pb(cd/20*100,'#f59e0b')}`:'<br><small>প্রথম পেইং ক্লায়েন্ট পাওয়ার লক্ষ্য: ১৫–২০ দিন (লক্ষ্য, নিশ্চয়তা নয়)</small><br><button class="btn" style="margin-top:6px" onclick="S.ch=td();save();render()">চ্যালেঞ্জ শুরু করুন</button>'}</div>
+<div class="g2">${ct('লিড রিসার্চ','ld','#f59e0b')}${ct('ইমেইল পাঠানো','em','#f59e0b','লক্ষ্য ৫–১০')}${ct('ফলো-আপ','fu','#f59e0b')}${ct('ইতিবাচক রিপ্লাই','rp','#10b981')}${ct('মিটিং','mt','#8b5cf6')}${ct('প্রপোজাল','pr','#4f46e5')}${ct('ক্লায়েন্ট (Won)','cl','#10b981')}<div class="c ct"><small>আয় (৳, ম্যানুয়াল)</small><input type="number" value="${gv(dv(cur),'rev')||''}" onchange="sv('rev',+this.value||0);save();render()"></div></div>
+<div class="c"><small>মোট: লিড ${bn(sum('ld'))} • ইমেইল ${bn(sum('em'))} • ফলো-আপ ${bn(sum('fu'))} • রিপ্লাই ${bn(sum('rp'))} • মিটিং ${bn(sum('mt'))} • প্রপোজাল ${bn(sum('pr'))} • ক্লায়েন্ট ${bn(sum('cl'))} • আয় ${money(sum('rev'))}</small></div>
+<h3>Lead CRM</h3><div class="c"><input id="ln" placeholder="নাম / কোম্পানি"><div class="ins"><input id="lc" placeholder="যোগাযোগ (ইমেইল/ফোন)"><input id="lsv" placeholder="সার্ভিস সুযোগ"><select id="lpr"><option>High</option><option selected>Medium</option><option>Low</option></select><input id="lnx" type="date"></div><input id="lnt" placeholder="নোট"><button class="btn" style="margin-top:8px;width:100%" onclick="A.al()">লিড যোগ করুন</button></div>
+${ls.length?ls.map(l=>`<div class="c" style="${l.nx&&l.nx<=td()&&l.st<6?'border-color:#f59e0b':''}"><div class="fb"><b>${esc(l.n)}</b><a onclick="A.dl('${l.id}')">✕</a></div><small>${esc(l.ct)} • ${esc(l.sv)} • ${l.pr}${l.lc?' • শেষ যোগাযোগ '+l.lc:''}${l.nx?' • ফলো-আপ '+l.nx:''}</small>${l.nt?`<br><small>${esc(l.nt)}</small>`:''}<select onchange="A.ls('${l.id}',this.value)">${ST.map((x,i)=>`<option value="${i}" ${l.st==i?'selected':''}>${x}</option>`).join('')}</select></div>`).join(''):'<div class="c"><small>এখনও কোনো লিড নেই। উপরের ফর্মে প্রথম লিডটি যোগ করুন।</small></div>'}
+<h3>Masterclass নোট ও অ্যাকশন আইটেম</h3><div class="c"><textarea onchange="S.mc=this.value;save()" placeholder="নোট ও করণীয়...">${esc(S.mc)}</textarea></div>`})());
+V.pj=()=>Object.keys(PM).map(k=>{const m=PM[k],t=S.proj[k],dn=t.filter(x=>x.d).length,p=t.length?Math.round(dn/t.length*100):0,nx=t.find(x=>!x.d),o=pj==k;
+return`<div class="c" style="border-top:4px solid ${m[1]}"><div class="fb" onclick="A.pj('${k}')"><div><b>${m[0]}</b><br><small>অগ্রাধিকার: ${m[2]} • ${p==0?'পরিকল্পনা':p<100?'চলমান':'সম্পন্ন'}</small></div><b style="color:${m[1]}">${bn(p)}%</b></div>${pb(p,m[1])}<small>পরের ধাপ: ${nx?esc(nx.t):'সব শেষ 🎉'}</small>
+${o?`${m[3]?`<br><small>⚠️ ${m[3]}</small>`:''}${t.map((x,i)=>`<div class="row" style="margin:7px 0"><button class="ck sm ${x.d?'on':''}" style="--c:${m[1]}" onclick="A.pt('${k}',${i})">${x.d?'✓':''}</button><span style="flex:1">${esc(x.t)}</span><a onclick="A.pr('${k}',${i})">✕</a></div>`).join('')}<div class="row"><input id="pi${k}" placeholder="নতুন টাস্ক"><button class="btn" onclick="A.pa('${k}')">+</button></div>`:''}</div>`}).join('');
+V.ln=()=>{const k=l7(cur),tot=lm(dv(cur));
+return db()+`<div class="c"><b>আজ মোট ${bn(tot)} মিনিট</b><br><small>লক্ষ্য: ${bn(LN.reduce((a,l)=>a+l[3],0))} মিনিট</small></div>`+
+LN.map(l=>{const v=gv(dv(cur),'ln.'+l[0]);return`<div class="c" style="border-top:4px solid ${l[2]}"><div class="fb"><div><b>${l[1]}</b><br><small>${l[4]}</small></div><b style="color:${l[2]}">${bn(v)}/${bn(l[3])} মি.</b></div>${pb(v/l[3]*100,l[2])}<div class="pill"><button class="btn o" onclick="A.c('ln.${l[0]}',-15)">−১৫</button><button class="btn" style="background:${l[2]}" onclick="A.c('ln.${l[0]}',15)">+১৫ মিনিট</button></div>${l[0]=='ma'?`<div>${MR.map(x=>`<span class="bg" onclick="A.mr('${x}')" style="background:${S.mr[x]?'#7c3aed':'#94a3b8'};padding:4px 10px;margin:2px">${S.mr[x]?'✓ ':''}${x}</span>`).join('→')}</div>`:''}${l[0]=='bk'?`<input placeholder="বর্তমান বই" value="${esc(S.bk)}" onchange="S.bk=this.value;save()" style="margin-top:6px"><div class="ins"><label><small>আজ পড়া পৃষ্ঠা</small><input type="number" value="${gv(dv(cur),'pg')||''}" onchange="sv('pg',+this.value||0);save();render()"></label><div><small>মোট পৃষ্ঠা</small><br><b>${bn(sum('pg'))}</b></div></div>`:''}</div>`}).join('')+
+`<h3>গত ৭ দিনে মোট শেখার সময় (মিনিট)</h3><div class="c">${bars(k.map(x=>lm(dv(x))),'#0ea5e9',k)}<small>ধারাবাহিকতা: ${bn(k.filter(x=>lm(dv(x))>0).length)}/৭ দিন</small></div>`};
+const sd=d=>d.sb&&d.sw?((mn(d.sw)-mn(d.sb)+1440)%1440)/60:0;
+V.mo=()=>{const d=dv(cur),sc=stat(cur),k=l7(cur);let sg=-1,sdy=0;if(S.sl){sdy=df(S.sl,td());TH.forEach((x,i)=>{if(sdy>=x)sg=i})}
+const rv=d.rv||{},sm=`📅 ${dl(cur,{day:'numeric',month:'long',year:'numeric'})}\n✅ রুটিন: ${sc.dn}/${sc.tot} (${sc.p}%)\n🛍️ Ruposhi: ${gv(d,'o.c')} কনফার্ম, ${gv(d,'o.d')} ডেলিভারড\n📧 কোল্ড ইমেইল: ${gv(d,'em')} • ইতিবাচক রিপ্লাই: ${gv(d,'rp')}\n📚 শেখার সময়: ${lm(d)} মিনিট\n🚀 এগিয়েছে: ${rv.p||'-'}\n🏆 সেরা অর্জন: ${rv.a||'-'}\n🔧 কাল উন্নতি: ${rv.i||'-'}\n📝 ${rv.n||''}`;
+return db()+`<h3>সাপ্তাহিক ফোকাস</h3><div class="c">${[6,0,1,2,3,4,5].map(i=>`<div style="${i==wdn(td())?'font-weight:700;color:var(--pr)':''}">${DN[i]}: ${W[i]}</div>`).join('')}<small>মূল রুটিন অপরিবর্তিত; থিম শুধু অতিরিক্ত ফোকাস।</small></div>
+<h3>ডেইলি রিভিউ</h3><div class="c"><small>সংখ্যাগুলো আপনার এন্ট্রি থেকে স্বয়ংক্রিয়ভাবে আসে</small><input placeholder="কোন প্রজেক্ট এগিয়েছে?" value="${esc(rv.p)}" onchange="sv('rv.p',this.value);save();render()" style="margin-top:6px"><input placeholder="আজকের সেরা অর্জন" value="${esc(rv.a)}" onchange="sv('rv.a',this.value);save();render()" style="margin-top:6px"><input placeholder="কাল কী উন্নত করবেন?" value="${esc(rv.i)}" onchange="sv('rv.i',this.value);save();render()" style="margin-top:6px"><input placeholder="নোট (ঐচ্ছিক)" value="${esc(rv.n)}" onchange="sv('rv.n',this.value);save();render()" style="margin-top:6px"><textarea readonly id="sm" style="min-height:170px;margin-top:8px">${esc(sm)}</textarea><button class="btn" style="width:100%;margin-top:6px" onclick="A.cp('sm')">সারাংশ কপি</button></div>
+<h3>ঘুম ট্র্যাকার</h3><div class="c">${sg<0?'<small>ধাপে ধাপে ঘুমের সময় এগিয়ে আনার প্ল্যান (নমনীয় লক্ষ্য, চিকিৎসা নির্দেশ নয়)</small><br><button class="btn" style="margin-top:6px" onclick="S.sl=td();save();render()">প্ল্যান শুরু করুন</button>':`<b>দিন ${bn(sdy+1)} — আজকের লক্ষ্য: ${f12(SP[sg][0])} থেকে ${f12(SP[sg][1])}</b><br><small>পর্যাপ্ত ঘুম দরকার হলে সময় বাড়ানো ঠিক আছে</small>`}
+<div class="ins"><label><small>বিছানায় গেছেন (গত রাত)</small><input type="time" value="${d.sb||''}" onchange="sv('sb',this.value);save();render()"></label><label><small>উঠেছেন</small><input type="time" value="${d.sw||''}" onchange="sv('sw',this.value);save();render()"></label></div>${sd(d)?`<b>ঘুম: ${bn(sd(d).toFixed(1))} ঘণ্টা</b>`:''}${bars(k.map(x=>sd(dv(x))),'#1e3a8a',k,'ঘ')}</div>
+<h3>ডেটা ও সেটিংস</h3><div class="c">${ok?'<small>✅ ডেটা এই ব্রাউজারে সেভ হচ্ছে (ডিভাইস/ক্যাশ মুছলে হারাবে)। নিয়মিত JSON ব্যাকআপ রাখুন।</small>':'<small style="color:#e11d48">⚠️ এই পরিবেশে ব্রাউজার স্টোরেজ বন্ধ — পেজ বন্ধ করলে ডেটা মুছে যেতে পারে। নিচে JSON এক্সপোর্ট করে রাখুন।</small>'}
+<div class="pill"><button class="btn o" onclick="A.dk()">🌓 ডার্ক/লাইট</button><button class="btn o" onclick="A.ex2()">এক্সপোর্ট</button><button class="btn o" onclick="A.im()">ইমপোর্ট</button></div><textarea id="jx" placeholder="এক্সপোর্ট করলে JSON এখানে আসবে; ইমপোর্টের জন্য JSON পেস্ট করুন" style="min-height:110px"></textarea><button class="btn o" style="width:100%;margin-top:6px" onclick="A.cp('jx')">JSON কপি</button></div>`};
+const A={
+go(t){tab=t;if(t=='home')cur=td();scrollTo(0,0);render()},
+dt(n){cur=n?ad(cur,n):td();render()},
+tg(id){const d=dw(cur);d.t[id]=d.t[id]=='d'?'':'d';save();render()},
+sk(id){const d=dw(cur);d.t[id]=d.t[id]=='s'?'':'s';save();render()},
+ex(id){open=open==id?'':id;render()},
+ed(id,f,v){const d=dw(cur),x=d.x.find(y=>y.id==id);if(x)x[f]=v;else{const r=R.find(y=>y[0]==id);if(f=='n')d.nm[id]=v;else{const t=d.tm[id]||[r[1],r[2]];t[f=='s'?0:1]=v;d.tm[id]=t}}save();render()},
+ad(){const n=$('cn').value.trim(),s=$('cs').value,e=$('ce').value;if(!n||!s||!e){msg='নাম ও সময় দিন';return render()}dw(cur).x.push({id:'c'+Date.now(),s,e,n,c:$('cc').value,ds:'কাস্টম টাস্ক'});save();render()},
+del(id){const d=dw(cur);d.x=d.x.filter(x=>x.id!=id);delete d.t[id];open='';save();render()},
+rs(){if(!rc){rc=1;return render()}dw(cur).t={};rc=0;save();render()},
+c(p,n){sv(p,Math.max(0,gv(dv(cur),p)+n));save();render()},
+st(f,v){S.set[f]=Math.max(0,+v||0);save();render()},
+al(){const n=$('ln').value.trim();if(!n){msg='লিডের নাম দিন';return render()}S.leads.unshift({id:'l'+Date.now(),n,ct:$('lc').value,sv:$('lsv').value,pr:$('lpr').value,st:0,nx:$('lnx').value,nt:$('lnt').value,lc:''});save();render()},
+ls(id,v){const l=S.leads.find(x=>x.id==id);l.st=+v;if(v>=2)l.lc=td();save();render()},
+dl(id){S.leads=S.leads.filter(x=>x.id!=id);save();render()},
+pj(k){pj=pj==k?'':k;render()},
+pt(k,i){S.proj[k][i].d=S.proj[k][i].d?0:1;save();render()},
+pr(k,i){S.proj[k].splice(i,1);save();render()},
+pa(k){const v=$('pi'+k).value.trim();if(v){S.proj[k].push({t:v,d:0});save();render()}},
+mr(x){S.mr[x]=!S.mr[x];save();render()},
+dk(){const d=document.documentElement.dataset.theme=='dark'||(!document.documentElement.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);S.dark=!d;save();render()},
+ex2(){$('jx').value=JSON.stringify(S,null,1);$('jx').select()},
+im(){try{const o=JSON.parse($('jx').value);if(!o||typeof o.days!='object'||!o.set||typeof o.set.price!='number'||!Array.isArray(o.leads)||!o.proj||typeof o.proj!='object')throw 0;S=Object.assign(mk(),o);Object.keys(PM).forEach(k=>{if(!Array.isArray(S.proj[k]))S.proj[k]=seed(k)});save();msg='ইমপোর্ট সফল';render()}catch(e){msg='ইমপোর্ট ব্যর্থ — সঠিক এক্সপোর্ট করা JSON দিন';render()}},
+cp(id){const e=$(id);e.select();try{navigator.clipboard.writeText(e.value)}catch(x){document.execCommand&&document.execCommand('copy')}}};
+const TB=[['home','🏠','হোম'],['rt','🗓️','Routine'],['bz','💼','Business'],['pj','🚀','Projects'],['ln','📚','Learning'],['mo','☰','আরও']];
+function render(){document.documentElement.dataset.theme=S.dark===true?'dark':'light';
+$('m').innerHTML=(msg?`<div class="c pop">${msg}</div>`:'')+V[tab]();msg='';if(tab!='rt')rc=0;
+$('nv').innerHTML=TB.map(t=>`<button class="${tab==t[0]?'on':''}" onclick="A.go('${t[0]}')"><span>${t[1]}</span>${t[2]}</button>`).join('')}
+if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+render();
+setInterval(()=>{const a=document.activeElement;if(!a||a.tagName=='BODY')render()},60000);
+</script></body></html>
